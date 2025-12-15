@@ -127,7 +127,10 @@ if __name__ == "__main__":
     args = parse_args()
 
     print("Initializing SAM3 model...")
-    model = build_sam3_image_model(load_from_HF=False, checkpoint_path=args.chkpt)
+    try:
+        model = build_sam3_image_model(load_from_HF=False, checkpoint_path=args.chkpt)
+    except FileNotFoundError:
+        sys.exit(f"Model checkpoint not found: '{args.chkpt}'")
     processor = Sam3Processor(model)
 
     print(f"Input folder: '{get_relpath(args.input)}'...", end=" ")
