@@ -55,6 +55,8 @@ This breakthrough is driven by an innovative data engine that has automatically 
   <img src="assets/player.gif" width=380 />
 </p>
 
+**NOTE**: _ZCS SensAI Team_ added the `segment_images.py` script to apply SAM3 to a `Grass/NotGrass` binary segmentation task. 
+
 ## Installation
 
 ### Prerequisites
@@ -66,9 +68,9 @@ This breakthrough is driven by an innovative data engine that has automatically 
 1. **Create a new Conda environment:**
 
 ```bash
-conda create -n sam3 python=3.12
+conda create -n sam3_segm python=3.12 -y
 conda deactivate
-conda activate sam3
+conda activate sam3_segm
 ```
 
 2. **Install PyTorch with CUDA support:**
@@ -80,8 +82,8 @@ pip install torch==2.7.0 torchvision torchaudio --index-url https://download.pyt
 3. **Clone the repository and install the package:**
 
 ```bash
-git clone https://github.com/facebookresearch/sam3.git
-cd sam3
+git clone https://github.com/Laboratorio-delle-Idee/sam3_segm.git
+cd sam3_segm
 pip install -e .
 ```
 
@@ -93,6 +95,12 @@ pip install -e ".[notebooks]"
 
 # For development
 pip install -e ".[train,dev]"
+```
+
+5. **Install dependencies for ZCS scripts:**
+
+```bash
+
 ```
 
 ## Getting Started
