@@ -168,6 +168,24 @@ response = video_predictor.handle_request(
 output = response["outputs"]
 ```
 
+## Object Detection with SAM3
+
+The `detect_images.py` script performs automatic image annotation by detecting bounding boxes and object classes using SAM3.
+
+Use the `--input_dir` argument to specify the directory containing the input images.
+The list of object classes to detect is provided in `classes.txt` and can be customized based on the desired targets.
+
+For each image, the script generates a corresponding .json file in Labelme-compatible format.
+
+```
+python detect_images.py --input_dir <name_folder> --
+```
+
+```
+i.e
+python detect_images.py --input_dir assets/test_images
+```
+
 ## Examples
 
 The `examples` directory contains notebooks demonstrating how to use SAM3 with

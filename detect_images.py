@@ -3,6 +3,7 @@ import json
 import os
 from PIL import Image
 import time
+import argparse
 
 from sam3.model_builder import build_sam3_image_model
 from sam3.model.sam3_image_processor import Sam3Processor
@@ -10,18 +11,30 @@ from sam3.model.sam3_image_processor import Sam3Processor
 # ================= CONFIG =================
 SCORE_THRESHOLD = 0.5
 
-list_objects = [
-    "car",
-    "soccer goal",
-    "ball",
-    "bottle",
-    "glasses",
-    "tennis racket",
-    "person",
-    "cell phone"
-]
+# ================= ARGPARSE =================
+parser = argparse.ArgumentParser(description="Object detection with SAM3")
+parser.add_argument(
+    "--input_dir",
+    type=str,
+    help="Path to folder containing images - the output JSON files will be saved in the same folder",
+    required=True   
+)
 
-input_dir = "assets/test_images"
+parser.add_argument(
+    "--classes_file",
+    type=str,
+    default="classes.txt",
+    help="Path to txt file containing classes (one per line)"
+)
+
+args = parser.parse_args()
+
+input_dir = args.input_dir
+
+
+if args.classes_file:
+    with open(args.classes_file) as f:
+        list_classes = [line.strip() for line in f if line.strip()]
 
 # ================= MODEL =================
 print('Loading model...')
@@ -49,7 +62,7 @@ with torch.no_grad():
         t0 = time.perf_counter()
         base_state = processor.set_image(image)
 
-        for obj in list_objects:
+        for obj in list_classes:
             print(f"  Detecting: {obj}")
 
             # copia stato della backbone 
@@ -107,6 +120,6 @@ with torch.no_grad():
         with open(json_path, "w") as f:
             json.dump(labelme_json, f, indent=2)
 
-        print(f"Saved: {json_path} ({len(all_detections)} objects)")
+        print(f"Saved: {json_path} ({len(all_detections)} classes)")
 
 print("\nDone.")
