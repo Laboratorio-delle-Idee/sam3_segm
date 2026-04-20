@@ -108,8 +108,20 @@ pip install -e ".[train,dev]"
 ⚠️ Before using SAM 3, please request access to the checkpoints on the SAM 3
 Hugging Face [repo](https://huggingface.co/facebook/sam3). Once accepted, you
 need to be authenticated to download the checkpoints. You can do this by running
-the following [steps](https://huggingface.co/docs/huggingface_hub/en/quick-start#authentication)
-(e.g. `hf auth login` after generating an access token.)
+the following [steps](https://huggingface.co/docs/huggingface_hub/en/quick-start#authentication):
+
+1. To create an access token, go to your Hugging Face account settings page:
+https://huggingface.co/settings/tokens and click on “Create new token.”
+
+2. Select “fine-grained” as the token type, and make sure to enable the option:
+“Read access to contents of all public gated repos you can access.”
+
+3. Once the token is created, save it in a secure place.
+
+Then run the following command to authenticate and paste the token you just generated:
+```
+hf auth login
+```
 
 ### Basic Usage
 
