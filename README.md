@@ -85,6 +85,7 @@ pip install torch==2.7.0 torchvision torchaudio --index-url https://download.pyt
 git clone https://github.com/Laboratorio-delle-Idee/sam3_segm.git
 cd sam3_segm
 pip install -e .
+pip install einops decord pycocotools psutil
 ```
 
 4. **Install additional dependencies for example notebooks or development:**

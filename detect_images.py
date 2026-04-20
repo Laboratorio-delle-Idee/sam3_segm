@@ -21,7 +21,7 @@ list_objects = [
     "cell phone"
 ]
 
-input_dir = "test_images"
+input_dir = "assets/test_images"
 
 # ================= MODEL =================
 print('Loading model...')
