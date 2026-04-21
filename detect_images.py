@@ -4,9 +4,11 @@ import os
 from PIL import Image
 import time
 import argparse
-
+from sam3.visualization_utils import draw_box_on_image, generate_colors, plot_bbox
+from PIL import ImageDraw, ImageFont
 from sam3.model_builder import build_sam3_image_model
 from sam3.model.sam3_image_processor import Sam3Processor
+import matplotlib.pyplot as plt
 
 # ================= CONFIG =================
 SCORE_THRESHOLD = 0.5
@@ -27,14 +29,19 @@ parser.add_argument(
     help="Path to txt file containing classes (one per line)"
 )
 
+parser.add_argument(
+    "--save_bbox_images",
+    action="store_true",
+    help="If set, save images with bounding boxes"
+)
+
 args = parser.parse_args()
-
 input_dir = args.input_dir
-
 
 if args.classes_file:
     with open(args.classes_file) as f:
         list_classes = [line.strip() for line in f if line.strip()]
+colors = generate_colors(n_colors=len(list_classes))
 
 # ================= MODEL =================
 print('Loading model...')
@@ -61,7 +68,12 @@ with torch.no_grad():
 
         t0 = time.perf_counter()
         base_state = processor.set_image(image)
-
+        
+        if args.save_bbox_images:
+            plt.figure(figsize=(10, 8))
+            plt.imshow(image)
+            ax = plt.gca()
+                
         for obj in list_classes:
             print(f"  Detecting: {obj}")
 
@@ -98,6 +110,18 @@ with torch.no_grad():
                     "mask": None
                 })
                 
+                if args.save_bbox_images:              
+                    color = colors[list_classes.index(obj)] 
+                    plot_bbox(
+                        h, w,
+                        [x1, y1, x2, y2],
+                        box_format="XYXY",
+                        relative_coords=False,
+                        color=color,
+                        text=f"{obj} {score:.2f}",
+                        ax=ax
+                    )
+                
         # End time
         if torch.cuda.is_available():
             torch.cuda.synchronize()
@@ -121,5 +145,10 @@ with torch.no_grad():
             json.dump(labelme_json, f, indent=2)
 
         print(f"Saved: {json_path} ({len(all_detections)} classes)")
+        plt.axis("off")
+        out_img_path = os.path.join(input_dir, filename.rsplit(".", 1)[0] + "_bbox.jpg")
+        plt.savefig(out_img_path, bbox_inches="tight", pad_inches=0)
+        plt.close()
+        print(f"Saved image: {out_img_path}")
 
 print("\nDone.")

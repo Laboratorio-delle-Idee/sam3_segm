@@ -85,6 +85,8 @@ pip install torch==2.7.0 torchvision torchaudio --index-url https://download.pyt
 git clone https://github.com/Laboratorio-delle-Idee/sam3_segm.git
 cd sam3_segm
 pip install -e .
+
+# Install the dependencies required to run detect_images.py
 pip install einops decord pycocotools psutil
 ```
 
@@ -174,16 +176,17 @@ The `detect_images.py` script performs automatic image annotation by detecting b
 
 Use the `--input_dir` argument to specify the directory containing the input images.
 The list of object classes to detect is provided in `classes.txt` and can be customized based on the desired targets.
+The `--save_bbox_images` flag enables the saving of images annotated with bounding boxes and class labels for detected objects.
 
 For each image, the script generates a corresponding .json file in Labelme-compatible format.
 
 ```
-python detect_images.py --input_dir <name_folder> --
+python detect_images.py --input_dir <name_folder> --classes_file classes.txt
 ```
 
 ```
 i.e
-python detect_images.py --input_dir assets/test_images
+python detect_images.py --input_dir assets/test_images --classes_file classes.txt
 ```
 
 ## Examples
