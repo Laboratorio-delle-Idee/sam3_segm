@@ -145,10 +145,12 @@ with torch.no_grad():
             json.dump(labelme_json, f, indent=2)
 
         print(f"Saved: {json_path} ({len(all_detections)} classes)")
-        plt.axis("off")
-        out_img_path = os.path.join(input_dir, filename.rsplit(".", 1)[0] + "_bbox.jpg")
-        plt.savefig(out_img_path, bbox_inches="tight", pad_inches=0)
-        plt.close()
-        print(f"Saved image: {out_img_path}")
+        
+        if args.save_bbox_images:
+            plt.axis("off")
+            out_img_path = os.path.join(input_dir, filename.rsplit(".", 1)[0] + "_bbox.jpg")
+            plt.savefig(out_img_path, bbox_inches="tight", pad_inches=0)
+            plt.close()
+            print(f"Saved image: {out_img_path}")
 
 print("\nDone.")
