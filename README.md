@@ -55,7 +55,7 @@ This breakthrough is driven by an innovative data engine that has automatically 
   <img src="assets/player.gif" width=380 />
 </p>
 
-**NOTE**: _ZCS SensAI Team_ added the `segment_images.py` script to apply SAM3 to a `Grass/NotGrass` binary segmentation task. 
+**NOTE**: _ZCS SensAI Team_ added the `segment_images.py` script to apply SAM3 to a `Grass/NotGrass` binary segmentation task.
 
 ## Installation
 
@@ -71,6 +71,8 @@ This breakthrough is driven by an innovative data engine that has automatically 
 conda create -n sam3_segm python=3.12 -y
 conda deactivate
 conda activate sam3_segm
+
+conda install -c conda-forge opencv
 ```
 
 2. **Install PyTorch with CUDA support:**
@@ -87,7 +89,7 @@ cd sam3_segm
 pip install -e .
 
 # Install the dependencies required to run detect_images.py
-pip install einops decord pycocotools psutil
+pip install einops decord pycocotools psutil pandas
 ```
 
 4. **Install additional dependencies for example notebooks or development:**
@@ -103,23 +105,22 @@ pip install -e ".[train,dev]"
 5. **Install dependencies for ZCS scripts:**
 
 ```bash
-
 ```
 
 ## Getting Started
 
-⚠️ Before using SAM 3, please request access to the checkpoints on the SAM 3
-Hugging Face [repo](https://huggingface.co/facebook/sam3). Once accepted, you
-need to be authenticated to download the checkpoints. You can do this by running
-the following [steps](https://huggingface.co/docs/huggingface_hub/en/quick-start#authentication):
+Before using SAM 3, you need to SignUp in Hugging Face and request access to SAM 3. Follow the steps, explained also in the official[steps](https://huggingface.co/docs/huggingface_hub/en/quick-start#authentication):
 
-1. To create an access token, go to your Hugging Face account settings page:
+1. Request access to the checkpoints on the SAM 3
+Hugging Face at this [repo](https://huggingface.co/facebook/sam3) Once accepted (around 30 mins needed), you need to be authenticated to download the checkpoints.
+
+2. To create an access token, go to your Hugging Face account settings page:
 https://huggingface.co/settings/tokens and click on “Create new token.”
 
-2. Select “fine-grained” as the token type, and make sure to enable the option:
+3. Select “fine-grained” as the token type, and make sure to enable the option:
 “Read access to contents of all public gated repos you can access.”
 
-3. Once the token is created, save it in a secure place.
+4. Once the token is created, save it in a secure place.
 
 Then run the following command to authenticate and paste the token you just generated:
 ```
