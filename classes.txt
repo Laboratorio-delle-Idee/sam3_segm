@@ -1,8 +1,0 @@
-car
-soccer goal
-ball
-bottle
-glasses
-tennis racket
-person
-cell phone
